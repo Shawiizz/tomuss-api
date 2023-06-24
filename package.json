@@ -1,0 +1,14 @@
+{
+  "name": "tomuss-api",
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/node": "^20.3.1",
+    "axios": "^1.4.0",
+    "axios-cookiejar-support": "^4.0.7",
+    "json5": "^2.2.3",
+    "tough-cookie": "^4.1.3"
+  },
+  "devDependencies": {
+    "@types/tough-cookie": "^4.0.2"
+  }
+}
