@@ -1,7 +1,10 @@
 {
   "name": "tomuss-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "author": "Shawiiz_z",
   "scripts": {
     "build": "tsc",
