@@ -19,7 +19,7 @@ Télécharger [Node.JS](https://nodejs.org/fr) si ce n'est pas déjà fait.
 Ensuite, clonez le repository et installez les dépendances :
 
 ```bash
-git clone https://github.com/Shawiizz/tomuss-api.git
+git clone -b website https://github.com/Shawiizz/tomuss-api.git
 cd tomuss-api
 npm install
 ```
