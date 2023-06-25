@@ -1,7 +1,7 @@
-import JSON5 from "json5";
 import {Column, GradeElement, Stats, Type} from "../models/tomuss/TomussGradesModel";
 import {Grade, Subject} from "../models/SubjectModel";
 import {tomussDateToDate} from "./TomussTransformer";
+import {parse} from "json5";
 
 /**
  * Extracts the grades array from the HTML page
@@ -12,7 +12,7 @@ import {tomussDateToDate} from "./TomussTransformer";
  */
 export const extractGradesArray = (html: string) => {
     const arrayArg = html.split('display_update(')[1].split(',"Top"')[0]
-    const array = JSON5.parse(arrayArg)
+    const array = parse(arrayArg)
 
     for (const item of array)
         if (item[0] === 'Grades')
