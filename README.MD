@@ -1,7 +1,7 @@
 <div align="center">
   <h1 align="center">Tomuss Grade API Website</h1>
 
-### Obtenir ses notes de Tomuss
+### Remplir le fichier XLSX du BUT1 (Info Doua) avec ses notes de Tomuss
 ![NodeJS](https://img.shields.io/badge/node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Typescript](https://img.shields.io/badge/typescript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Github stars](https://img.shields.io/github/stars/MohistMC/Website?style=for-the-badge)
@@ -9,7 +9,8 @@
 
 ## A propos
 
-Interface web pour utiliser la fonctionnalité de remplissage du fichier XLSX du BUT1 (Info Doua) avec ses notes de Tomuss.
+Interface web pour utiliser la fonctionnalité de remplissage du fichier XLSX du BUT1 (Info Doua) avec ses notes de Tomuss.    
+Normalement tout fonctionne, il suffit de bien lire les instructions.
 
 ## Comment l'utiliser
 
