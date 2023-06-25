@@ -14,11 +14,21 @@ export default class CASAuthenticator {
         this.client.defaults.headers.common['User-Agent'] = Constant.USER_AGENT
     }
 
-    getExecToken = async (cookiesJar: CookieJar): Promise<string> => {
+    /**
+     * Get the execution token from the CAS login page (needed for login)
+     */
+    getExecToken = async (): Promise<string> => {
         const axReq = await this.client.get(Constant.CAS_URL + '/cas/login')
         return axReq.data.split('name="execution" value="')[1].split('"')[0]
     }
 
+    /**
+     * Redirect to the given service URL
+     * If unsafe is true, the user will be redirected to the unsafe version of the service
+     *
+     * @param serviceUrl The service URL
+     * @param unsafe Whether to redirect to the unsafe version of the service
+     */
     serviceRedirect = async (serviceUrl: string, unsafe: boolean = true) => {
         const serviceResponse = await this.client.get(`${Constant.CAS_URL}/cas/login?service=${serviceUrl}${unsafe ? '/?unsafe=1' : ''}`, {
             headers: {
@@ -34,15 +44,26 @@ export default class CASAuthenticator {
         return serviceResponse.data
     }
 
+    /**
+     * Get the given page content
+     *
+     * @param url The page URL
+     */
     getPage = async (url: string) => {
         return await this.client.get(url)
     }
 
+    /**
+     * Login to CAS
+     *
+     * @param username The username (pXXXXXXX)
+     * @param password The password
+     */
     login = async (username: string, password: string) => {
         // First get the execution token
-        if(!this.execToken || !this.execToken.length) {
-            const {config} = await this.client.get(getCasLoginUrl())
-            this.execToken = await this.getExecToken(config.jar!)
+        if (!this.execToken || !this.execToken.length) {
+            await this.client.get(getCasLoginUrl())
+            this.execToken = await this.getExecToken()
         }
 
         await this.client.post(Constant.CAS_URL + '/cas/login', {
@@ -57,9 +78,5 @@ export default class CASAuthenticator {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
         })
-    }
-
-    getCookieJar = () => {
-        return this.cookieJar
     }
 }

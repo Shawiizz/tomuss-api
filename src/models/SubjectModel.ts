@@ -1,13 +1,16 @@
 export interface Subject {
     title: string;
     ue: string;
-    notes: Note[];
+    notes: Grade[];
 }
 
-export interface Note {
+export interface Grade {
     title?: string;
     comment?: string;
-    note: number;
+    mark: {
+        value: number;
+        on: number;
+    };
     teacherName: string;
     date: Date | null;
     stats: Stats;

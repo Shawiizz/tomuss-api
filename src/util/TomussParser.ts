@@ -1,8 +1,15 @@
 import JSON5 from "json5";
-import {Column, GradeElement, Stats} from "../models/tomuss/TomussGradesModel";
-import {Note, Subject} from "../models/SubjectModel";
+import {Column, GradeElement, Stats, Type} from "../models/tomuss/TomussGradesModel";
+import {Grade, Subject} from "../models/SubjectModel";
 import {tomussDateToDate} from "./TomussTransformer";
 
+/**
+ * Extracts the grades array from the HTML page
+ * The grades array is a JSON5 string inside a JS function call
+ * Note: The parsing isn't perfect, but it works
+ *
+ * @param html The HTML page
+ */
 export const extractGradesArray = (html: string) => {
     const arrayArg = html.split('display_update(')[1].split(',"Top"')[0]
     const array = JSON5.parse(arrayArg)
@@ -12,22 +19,47 @@ export const extractGradesArray = (html: string) => {
             return item[1][0]
 }
 
+/**
+ * Parses a subject from the JSON5 string
+ *
+ * @param subjectJson The grade element (JSON5 string)
+ *
+ * @returns The subject object
+ */
 export const parseSubject = (subjectJson: GradeElement): Subject => {
-    const noteColumns: Column[] = subjectJson.columns.filter(column => column.type === 'Note') as Column[]
-    const notes: Note[] = []
+    const noteColumnsWithPosition: {
+        position: number,
+        column: Column
+    }[] = []
 
-    for (const column of noteColumns) {
+    for (let i = 0; i < subjectJson.columns.length; i++) {
+        const column = subjectJson.columns[i]
+        if (column.type === Type.Note || column.type === Type.Moy)
+            noteColumnsWithPosition.push({
+                position: i,
+                column: column
+            })
+    }
+
+    const notes: Grade[] = []
+
+    for (const {position, column} of noteColumnsWithPosition) {
         // @ts-ignore
         const stats = subjectJson.stats[column.the_id] as Stats
-        const note = subjectJson.line[column.position] as [number, string, string]
+        const note = subjectJson.line[position] as [number, string, string]
 
         // Note not valid or not set yet
-        if(!note || !note.length) continue
+        if (!note || !note.length || isNaN(note[0])) continue
+
+        const noteIsOn = column.minmax ? parseInt(column.minmax.split(';')[1]) : 20
 
         notes.push({
             title: column.title,
             comment: column.comment,
-            note: note[0],
+            mark: {
+                value: note[0],
+                on: noteIsOn,
+            },
             teacherName: note[1],
             date: tomussDateToDate(note[2]),
             stats: {

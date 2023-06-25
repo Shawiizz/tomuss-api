@@ -2,6 +2,11 @@ import {GradeElement} from "../models/tomuss/TomussGradesModel";
 import {Subject} from "../models/SubjectModel";
 import {parseSubject} from "./TomussParser";
 
+/**
+ * Converts a TOMUSS grades array to a subjects array
+ *
+ * @param gradesArray The TOMUSS grades array
+ */
 export const tomussGradesToSubjects = (gradesArray: GradeElement[]): Subject[] => {
     const subjects: Subject[] = []
 
@@ -11,6 +16,11 @@ export const tomussGradesToSubjects = (gradesArray: GradeElement[]): Subject[] =
     return subjects
 }
 
+/**
+ * Converts a TOMUSS date to a Date object
+ *
+ * @param tomussDate The TOMUSS date (YYYYMMDDHHmmss)
+ */
 export const tomussDateToDate = (tomussDate: string): Date | null => {
     if (!tomussDate || !tomussDate.length) return null
 
