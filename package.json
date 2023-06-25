@@ -1,6 +1,9 @@
 {
   "name": "moybutcalculatorwebsite",
   "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node src/Main.ts"
+  },
   "dependencies": {
     "fastify": "^4.18.0",
     "tomuss-api": "github:shawiizz/tomuss-api"
