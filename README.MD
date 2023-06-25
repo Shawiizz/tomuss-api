@@ -40,7 +40,9 @@ Je ne garantis pas que ça marche à 100%, mais ça peut vous faire gagner du te
 <strong>Pour les matières où il n'y a pas de notes, le programme laissera la case vide.</strong>
 
 ```typescript
-await fillXlsxFile(subjects, '/chemin/du/fichier.xlsx', false)
+const path = '/chemin/vers/le/fichier.xlsx'
+const modifiedXlsxFileBuffer = await fillXlsxFile(subjects, path, false)
+fs.writeFileSync(path, modifiedXlsxFileBuffer)
 ```
 
 En ce qui concerne le 3ᵉ paramètre qui est par défaut à `false`, il permet de calculer la moyenne d'une matière si la moyenne n'a pas déjà été calculée par les professeurs sur Tomuss. Vous pouvez donc mettre `true` si vous voulez que la moyenne soit calculée avec les notes récupérées.

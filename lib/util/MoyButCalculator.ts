@@ -7,8 +7,10 @@ import {Subject} from "../models/SubjectModel";
  * @param subjects The subjects array
  * @param filePath The XLSX file path
  * @param calculateMoyIfNotFound If true, the moyenne will be calculated if not already calculated in Tomuss
+ *
+ * @returns The XLSX file buffer
  */
-export const fillXlsxFile = async (subjects: Subject[], filePath: string, calculateMoyIfNotFound: boolean = false) => {
+export const fillXlsxFile = async (subjects: Subject[], filePath: string, calculateMoyIfNotFound: boolean = false): Promise<Buffer> => {
     const classeur = new ExcelJS.Workbook();
 
     await classeur.xlsx.readFile(filePath);
@@ -44,5 +46,5 @@ export const fillXlsxFile = async (subjects: Subject[], filePath: string, calcul
         });
     })
 
-    await classeur.xlsx.writeFile(filePath);
+    return await classeur.xlsx.writeBuffer() as Buffer;
 }
