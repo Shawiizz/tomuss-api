@@ -1,4 +1,4 @@
-import {Column, GradeElement, Stats, Type} from "../models/tomuss/TomussGradesModel";
+import {TomussColumn, TomussGradeElement, TomussStats, TomussType} from "../models/tomuss/TomussGradesModel";
 import {Grade, Subject} from "../models/SubjectModel";
 import {tomussDateToDate} from "./TomussTransformer";
 import {parse} from "json5";
@@ -26,15 +26,15 @@ export const extractGradesArray = (html: string) => {
  *
  * @returns The subject object
  */
-export const parseSubject = (subjectJson: GradeElement): Subject => {
+export const parseSubject = (subjectJson: TomussGradeElement): Subject => {
     const noteColumnsWithPosition: {
         position: number,
-        column: Column
+        column: TomussColumn
     }[] = []
 
     for (let i = 0; i < subjectJson.columns.length; i++) {
         const column = subjectJson.columns[i]
-        if (column.type === Type.Note || column.type === Type.Moy)
+        if (column.type === TomussType.Note || column.type === TomussType.Moy)
             noteColumnsWithPosition.push({
                 position: i,
                 column: column
@@ -45,7 +45,7 @@ export const parseSubject = (subjectJson: GradeElement): Subject => {
 
     for (const {position, column} of noteColumnsWithPosition) {
         // @ts-ignore
-        const stats = subjectJson.stats[column.the_id] as Stats
+        const stats = subjectJson.stats[column.the_id] as TomussStats
         const note = subjectJson.line[position] as [number, string, string]
 
         // Note not valid or not set yet

@@ -1,4 +1,4 @@
-import {GradeElement} from "../models/tomuss/TomussGradesModel";
+import {TomussGradeElement} from "../models/tomuss/TomussGradesModel";
 import {Subject} from "../models/SubjectModel";
 import {parseSubject} from "./TomussParser";
 
@@ -7,7 +7,7 @@ import {parseSubject} from "./TomussParser";
  *
  * @param gradesArray The TOMUSS grades array
  */
-export const tomussGradesToSubjects = (gradesArray: GradeElement[]): Subject[] => {
+export const tomussGradesToSubjects = (gradesArray: TomussGradeElement[]): Subject[] => {
     const subjects: Subject[] = []
 
     for (const subjectJson of gradesArray)

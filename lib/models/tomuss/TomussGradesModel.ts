@@ -1,6 +1,6 @@
 import {TomussSemester} from "../../util/Semester";
 
-export interface GradeElement {
+export interface TomussGradeElement {
     rounding:            number;
     contains_users:      number;
     modifiable:          number;
@@ -15,18 +15,18 @@ export interface GradeElement {
     ue:                  string;
     year:                number;
     semester:            TomussSemester;
-    columns:             Column[];
+    columns:             TomussColumn[];
     line_id:             string;
     line:                Array<Array<number | null | string>>;
     stats:               any;
     code?:               number;
 }
 
-export interface Column {
-    type:             Type;
+export interface TomussColumn {
+    type:             TomussType;
     author:           string;
     comment?:         string;
-    freezed?:         Freezed;
+    freezed?:         TomussFreezed;
     position:         number;
     repetition?:      number;
     title:            string;
@@ -44,12 +44,12 @@ export interface Column {
     enumeration?:     string;
 }
 
-export enum Freezed {
+export enum TomussFreezed {
     C = "C",
     F = "F",
 }
 
-export enum Type {
+export enum TomussType {
     Bool = "Bool",
     Enumeration = "Enumeration",
     Max = "Max",
@@ -59,7 +59,7 @@ export enum Type {
     UeGrade = "Ue_Grade",
 }
 
-export interface Stats {
+export interface TomussStats {
     nr:        number;
     nr_in_grp: number;
     rank?:     number;
