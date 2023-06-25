@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculateur de moyenne</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Poppins, sans-serif;
+    }
+
+    body {
+        background: rgb(0,6,94);
+        background: -moz-linear-gradient(23deg, rgba(0,6,94,1) 19%, rgba(3,54,142,1) 100%);
+        background: -webkit-linear-gradient(23deg, rgba(0,6,94,1) 19%, rgba(3,54,142,1) 100%);
+        background: linear-gradient(23deg, rgba(0,6,94,1) 19%, rgba(3,54,142,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00065e",endColorstr="#03368e",GradientType=1);
+        width: 100%;
+        height: 100vh;
+    }
+
+    header {
+        color: white;
+        padding-top: 3rem;
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    header h2 {
+        font-weight: 400;
+        font-size: 1.2rem;
+    }
+
+    a {
+        color: white;
+        text-decoration: underline;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    #main {
+        padding-top: 5rem;
+    }
+
+    #main form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 1rem;
+        background: rgb(240,29,29);
+        background: -moz-linear-gradient(23deg, rgba(240,29,29,1) 15%, rgba(193,125,19,1) 100%);
+        background: -webkit-linear-gradient(23deg, rgba(240,29,29,1) 15%, rgba(193,125,19,1) 100%);
+        background: linear-gradient(23deg, rgba(240,29,29,1) 15%, rgba(193,125,19,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f01d1d",endColorstr="#c17d13",GradientType=1);
+        border-radius: 5px;
+        color: white;
+    }
+
+    #main form label {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    #main form input {
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+    }
+
+    #main form button {
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        background: rgb(18,18,18);
+        background: -moz-linear-gradient(23deg, rgba(18,18,18,1) 15%, rgba(74,74,74,1) 100%);
+        background: -webkit-linear-gradient(23deg, rgba(18,18,18,1) 15%, rgba(74,74,74,1) 100%);
+        background: linear-gradient(23deg, rgba(18,18,18,1) 15%, rgba(74,74,74,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#121212",endColorstr="#4a4a4a",GradientType=1);         color: white;
+        font-weight: 600;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    #main p {
+        text-align: center;
+        color: white;
+        padding-bottom: 1rem;
+    }
+
+    #main form input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        text-decoration: underline;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 500px;
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+</style>
+<body>
+<header>
+    <h1>Calculateur de moyenne</h1>
+    <h2>Ce site permet de récupérer vos notes sur Tomuss et de les mettre dans un fichier XLSX fourni par l'IUT (fonctionne que pour les premières années).</h2>
+    <p>Le code source de ce site ainsi que du projet pour récupérer les notes est disponible sur ce <a href="https://github.com/Shawiizz/tomuss-api" target="_blank">GitHub</a></p>
+</header>
+<section id="main">
+    <p>Le programme a besoin de vos identifiants CAS pour récupérer les notes de Tomuss. <br>Si vous préférez, vous pouvez utiliser vous-même le projet en local.</p>
+    <form method="post">
+        <label for="username">Nom d'utilisateur Tomuss</label>
+        <input type="text" name="username" id="username" placeholder="Nom d'utilisateur Tomuss" required>
+        <label for="password">Mot de passe Tomuss</label>
+        <input type="password" name="password" id="password" placeholder="Mot de passe Tomuss" required>
+        <label for="checkbox">Forcer le calcul des moyennes</label>
+        <div class="tooltip">
+            Détails
+            <span class="tooltiptext">Si la moyenne n'est pas déjà calculée par les profs sur Tomuss, le logiciel peut le faire pour vous, mais attention, les coefficients ne sont pas connus donc la moyenne peut être sur-estimée ou sous-estimée.</span>
+        </div>
+        <input type="checkbox" name="checkbox" id="checkbox">
+        <button type="submit">Télécharger le fichier</button>
+    </form>
+</section>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tooltip = document.querySelector('.tooltip');
+        tooltip.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+    });
+
+    // make http request to get the file
+    const username = document.querySelector('#username');
+    const password = document.querySelector('#password');
+    const checkbox = document.querySelector('#checkbox');
+    const form = document.querySelector('form');
+    const button = document.querySelector('button');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        requestFile();
+    });
+
+    async function requestFile() {
+        const data = {
+            username: username.value,
+            password: password.value,
+            calcMoy: checkbox.checked
+        };
+
+        button.disabled = true;
+        button.textContent = 'Téléchargement en cours...';
+
+        const response = await fetch('http://localhost:8745/calculate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if(!response.ok) {
+            alert('Une erreur est survenue, vérifiez vos identifiants.');
+            button.disabled = false;
+            button.textContent = 'Télécharger le fichier';
+            return;
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'notes.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        button.disabled = false;
+        button.textContent = 'Télécharger le fichier';
+    }
+</script>
+</html>
