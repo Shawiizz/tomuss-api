@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Constant = exports.parseSubject = exports.extractGradesArray = exports.tomussDateToDate = exports.tomussGradesToSubjects = exports.fillXlsxFile = exports.getCurrentSemester = exports.getSemester = exports.buildTomussUrl = exports.TomussSemester = exports.Semester = exports.Tomuss = exports.CASAuthenticator = void 0;
+exports.mergeSubjectsWithSameUeId = exports.Constant = exports.parseSubject = exports.extractGradesArray = exports.tomussDateToDate = exports.tomussGradesToSubjects = exports.fillXlsxFile = exports.getCurrentSemester = exports.getSemester = exports.buildTomussUrl = exports.TomussSemester = exports.Semester = exports.Tomuss = exports.CASAuthenticator = void 0;
 var CASAuthenticator_1 = require("./lib/classes/CASAuthenticator");
 exports.CASAuthenticator = CASAuthenticator_1.default;
 var Tomuss_1 = require("./lib/classes/Tomuss");
@@ -19,5 +19,7 @@ Object.defineProperty(exports, "tomussDateToDate", { enumerable: true, get: func
 var TomussParser_1 = require("./lib/util/TomussParser");
 Object.defineProperty(exports, "extractGradesArray", { enumerable: true, get: function () { return TomussParser_1.extractGradesArray; } });
 Object.defineProperty(exports, "parseSubject", { enumerable: true, get: function () { return TomussParser_1.parseSubject; } });
+var SubjectUtil_1 = require("./lib/util/SubjectUtil");
+Object.defineProperty(exports, "mergeSubjectsWithSameUeId", { enumerable: true, get: function () { return SubjectUtil_1.mergeSubjectsWithSameUeId; } });
 var Constant_1 = require("./lib/Constant");
 Object.defineProperty(exports, "Constant", { enumerable: true, get: function () { return Constant_1.Constant; } });

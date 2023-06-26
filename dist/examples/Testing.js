@@ -61,7 +61,7 @@ function main() {
                     subjects = _a.sent();
                     mergedSubjects = (0, SubjectUtil_1.mergeSubjectsWithSameUeId)(subjects);
                     path = '/chemin/vers/le/fichier.xlsx';
-                    return [4 /*yield*/, (0, MoyButCalculator_1.fillXlsxFile)(mergedSubjects, path, true)];
+                    return [4 /*yield*/, (0, MoyButCalculator_1.fillXlsxFile)(mergedSubjects, path, false)];
                 case 3:
                     modifiedXlsxFileBuffer = _a.sent();
                     fs.writeFileSync(path, modifiedXlsxFileBuffer);

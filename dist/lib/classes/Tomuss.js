@@ -50,13 +50,30 @@ var Tomuss = /** @class */ (function () {
      */
     Tomuss.prototype.getTomussPage = function (semester) {
         return __awaiter(this, void 0, void 0, function () {
-            var redirectUrl;
+            var regexUrl, regexCountdown, redirectUrl, tomussPageContent, countdownMatch;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.CASAuthenticator.serviceRedirect((0, Semester_1.buildTomussUrl)(semester))];
+                    case 0:
+                        regexUrl = /window.location = "(.*)"/;
+                        regexCountdown = /id="t">(\d+\.\d+)/;
+                        return [4 /*yield*/, this.CASAuthenticator.serviceRedirect((0, Semester_1.buildTomussUrl)(semester))];
                     case 1:
                         redirectUrl = _a.sent();
-                        return [2 /*return*/, this.CASAuthenticator.getPage(redirectUrl.split('= "')[1].split('"')[0])];
+                        return [4 /*yield*/, this.CASAuthenticator.getPage(redirectUrl.match(regexUrl)[1])];
+                    case 2:
+                        tomussPageContent = _a.sent();
+                        countdownMatch = tomussPageContent.data.match(regexCountdown);
+                        if (!countdownMatch)
+                            return [2 /*return*/, tomussPageContent
+                                // Wait for the countdown to end
+                            ];
+                        if (!(parseFloat(countdownMatch[1]) > 0)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, parseFloat(countdownMatch[1]) * 1000); })];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [4 /*yield*/, this.CASAuthenticator.getPage(redirectUrl.match(regexUrl)[1])];
+                    case 5: return [2 /*return*/, _a.sent()];
                 }
             });
         });
