@@ -143,7 +143,7 @@
     <p>Le code source de ce site ainsi que du projet pour récupérer les notes est disponible sur ce <a href="https://github.com/Shawiizz/tomuss-api" target="_blank">GitHub</a></p>
 </header>
 <section id="main">
-    <p>Le programme a besoin de vos identifiants CAS pour récupérer les notes de Tomuss. <br>Si vous préférez, vous pouvez utiliser vous-même le projet en local.</p>
+    <p>Le programme a besoin de vos identifiants CAS pour récupérer les notes de Tomuss. <br>Le fichier peut prendre plusieurs secondes à être téléchargé selon s'il y a le compte a rebours de Tomuss ou non.</p>
     <form method="post">
         <label for="username">Nom d'utilisateur Tomuss</label>
         <input type="text" name="username" id="username" placeholder="Nom d'utilisateur Tomuss" required>
@@ -173,6 +173,11 @@
     const checkbox = document.querySelector('#checkbox');
     const form = document.querySelector('form');
     const button = document.querySelector('button');
+
+    checkbox.addEventListener('change', function() {
+        if(this.checked)
+            alert('Attention, les coefficients ne sont pas connus donc la moyenne peut être sur-estimée ou sous-estimée.');
+    });
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();

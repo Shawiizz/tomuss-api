@@ -1,7 +1,7 @@
 import {FastifyInstance} from "fastify";
 import * as path from "path";
 import * as fs from "fs";
-import {CASAuthenticator, fillXlsxFile, Semester, Tomuss} from "tomuss-api";
+import {CASAuthenticator, fillXlsxFile, mergeSubjectsWithSameUeId, Semester, Tomuss} from "tomuss-api";
 
 export default (app: FastifyInstance) => {
     const rootPath = path.join(__dirname, '../..');
@@ -31,10 +31,11 @@ export default (app: FastifyInstance) => {
 
         const tomuss = new Tomuss(casAuthenticator)
         const subjects = await tomuss.getSubjects(Semester.S1, Semester.S2)
+        const mergedSubjects = mergeSubjectsWithSameUeId(subjects)
 
         const pathToXlsx = path.join(rootPath, 'Calculer ses moyennes BUT - Info Doua.xlsx');
 
-        const modifiedXlsxFileBuffer = await fillXlsxFile(subjects, pathToXlsx, calcMoy)
+        const modifiedXlsxFileBuffer = await fillXlsxFile(mergedSubjects, pathToXlsx, calcMoy)
         return reply.code(200).send(modifiedXlsxFileBuffer);
     })
 
