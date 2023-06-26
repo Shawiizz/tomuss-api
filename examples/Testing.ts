@@ -17,7 +17,7 @@ async function main() {
     const mergedSubjects = mergeSubjectsWithSameUeId(subjects)
 
     const path = '/chemin/vers/le/fichier.xlsx'
-    const modifiedXlsxFileBuffer = await fillXlsxFile(mergedSubjects, path, true)
+    const modifiedXlsxFileBuffer = await fillXlsxFile(mergedSubjects, path, false)
     fs.writeFileSync(path, modifiedXlsxFileBuffer)
 }
 main().catch(console.error)
