@@ -31,6 +31,7 @@ await casAuthenticator.login('pXXXXXXX', 'password')
 
 const tomuss = new Tomuss(casAuthenticator)
 const subjects = await tomuss.getSubjects(Semester.S1, Semester.S2)
+const mergedSubjects = mergeSubjectsWithSameUeId(subjects) // Merge les matières qui ont le même id d'UE (pas obligatoire)
 ```
 
 ### Remplir un fichier xlsx avec ses notes (pour l'IUT Info)
