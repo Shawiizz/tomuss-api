@@ -57,6 +57,7 @@ export enum TomussType {
     Note = "Note",
     Text = "Text",
     UeGrade = "Ue_Grade",
+    Replace = "Replace",
 }
 
 export interface TomussStats {

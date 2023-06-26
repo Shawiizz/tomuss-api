@@ -34,7 +34,7 @@ export const parseSubject = (subjectJson: TomussGradeElement): Subject => {
 
     for (let i = 0; i < subjectJson.columns.length; i++) {
         const column = subjectJson.columns[i]
-        if (column.type === TomussType.Note || column.type === TomussType.Moy)
+        if (column.type === TomussType.Note || column.type === TomussType.Moy || column.type === TomussType.Replace)
             noteColumnsWithPosition.push({
                 position: i,
                 column: column

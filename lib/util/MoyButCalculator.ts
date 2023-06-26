@@ -34,7 +34,7 @@ export const fillXlsxFile = async (subjects: Subject[], filePath: string, calcul
 
             if (!moyenne) return
 
-            FCell.value = moyenne
+            FCell.value = moyenne.toString().replace('.', ',')
         }
     });
 
