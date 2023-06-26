@@ -35,6 +35,8 @@ const subjects = await tomuss.getSubjects(Semester.S1, Semester.S2)
 
 ### Remplir un fichier xlsx avec ses notes (pour l'IUT Info)
 
+<strong>Une version avec un site web a mettre en place facilement est disponible [à ce lien](https://github.com/Shawiizz/tomuss-api/tree/website).</strong>  
+
 Si vous avez le fichier `Calculer ses moyennes BUT - Info Doua.xlsx` et que vous êtes en 1ʳᵉ année, il y a un bout de code qui permet de préremplir le fichier avec vos notes.     
 Je ne garantis pas que ça marche à 100%, mais ça peut vous faire gagner du temps.   
 <strong>Pour les matières où il n'y a pas de notes, le programme laissera la case vide.</strong>
