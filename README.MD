@@ -13,8 +13,13 @@ Ceci est un petit projet node.js avec typescript pour obtenir ses notes de Tomus
 C'est un projet perso qui peut avoir quelques bugs, mais si vous voulez contribuer, n'hésitez pas à faire un pull request.
 
 ## Pour commencer
+Installer en tant que package Node.js :
+```bash
+npm install shawiizz/tomuss-api
+```
 
-D'abord, clonez le repository et installez les dépendances :
+### Contribuer / Modifier le code source
+Clonez le repository et installez les dépendances :
 
 ```bash
 git clone https://github.com/Shawiizz/tomuss-api.git
