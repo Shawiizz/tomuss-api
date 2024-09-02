@@ -24,7 +24,7 @@ export const Semester = {
  */
 export const getCurrentSemester = (): Semester => {
     const month = new Date().getMonth()
-    return month >= 9 ? Semester.S1 : Semester.S2
+    return month >= 8 ? Semester.S1 : Semester.S2
 }
 
 /**
