@@ -1,4 +1,4 @@
-import {TomussSemester} from "../../util/Semester";
+import {Season} from "../../util/enum/Season";
 
 export interface TomussGradeElement {
     rounding:            number;
@@ -14,7 +14,7 @@ export interface TomussGradeElement {
     masters:             Array<string[]>;
     ue:                  string;
     year:                number;
-    semester:            TomussSemester;
+    semester:            Season;
     columns:             TomussColumn[];
     line_id:             string;
     line:                Array<Array<number | null | string>>;

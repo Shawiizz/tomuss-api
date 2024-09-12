@@ -1,5 +1,5 @@
 import {TomussColumn, TomussGradeElement, TomussStats, TomussType} from "../models/tomuss/TomussGradesModel";
-import {Grade, Subject} from "../models/SubjectModel";
+import {Grade, Module} from "../models/ModuleModel";
 import {tomussDateToDate} from "./TomussTransformer";
 import {parse} from "json5";
 
@@ -20,20 +20,20 @@ export const extractGradesArray = (html: string) => {
 }
 
 /**
- * Parses a subject from the JSON5 string
+ * Parses a module from the JSON5 string
  *
- * @param subjectJson The grade element (JSON5 string)
+ * @param moduleJson The grade element (JSON5 string)
  *
- * @returns The subject object
+ * @returns The module object
  */
-export const parseSubject = (subjectJson: TomussGradeElement): Subject => {
+export const parseModule = (moduleJson: TomussGradeElement): Module => {
     const noteColumnsWithPosition: {
         position: number,
         column: TomussColumn
     }[] = []
 
-    for (let i = 0; i < subjectJson.columns.length; i++) {
-        const column = subjectJson.columns[i]
+    for (let i = 0; i < moduleJson.columns.length; i++) {
+        const column = moduleJson.columns[i]
         if (column.type === TomussType.Note || column.type === TomussType.Moy || column.type === TomussType.Replace)
             noteColumnsWithPosition.push({
                 position: i,
@@ -44,9 +44,8 @@ export const parseSubject = (subjectJson: TomussGradeElement): Subject => {
     const notes: Grade[] = []
 
     for (const {position, column} of noteColumnsWithPosition) {
-        // @ts-ignore
-        const stats = subjectJson.stats[column.the_id] as TomussStats
-        const note = subjectJson.line[position] as [number, string, string]
+        const stats = moduleJson.stats[column.the_id] as TomussStats
+        const note = moduleJson.line[position] as [number, string, string]
 
         // Note not valid or not set yet
         if (!note || !note.length || isNaN(note[0])) continue
@@ -78,8 +77,8 @@ export const parseSubject = (subjectJson: TomussGradeElement): Subject => {
     }
 
     return {
-        title: subjectJson.table_title,
-        ue: subjectJson.ue,
+        title: moduleJson.table_title,
+        ue: moduleJson.ue,
         notes: notes,
     }
 }

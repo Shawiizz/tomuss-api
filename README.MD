@@ -27,21 +27,34 @@ cd tomuss-api
 npm install
 ```
 
+Pour compiler le code TypeScript en JavaScript :
+```bash
+npm run build
+```
+Tout les fichiers compilés se trouvent dans le dossier `dist`.
+
 ## Exemples
+
+*Le code ci-dessous est présent dans le fichier `examples/Testing.ts` du repository.*
 
 ### Comment obtenir ses notes
 ```typescript
-const casAuthenticator = new CASAuthenticator()
-await casAuthenticator.login('pXXXXXXX', 'password')
+// Pour se connecter via le CAS
+const authService = new CASAuthService()
+await authService.login('pXXXXXX', 'password')
 
-const tomuss = new Tomuss(casAuthenticator)
-const subjects = await tomuss.getSubjects(Semester.S1, Semester.S2)
-const mergedSubjects = mergeSubjectsWithSameUeId(subjects) // Merge les matières qui ont le même id d'UE (pas obligatoire)
+// Pour récupérer les différents modules enseignés dans un semestre
+const tomussService = new TomussService(authService)
+const subjects = await tomussService.getModules(SemesterService.fromYearAndSeason(2022, Season.AUTOMNE))
+
+// Pour fusionner les modules qui ont le même id d'UE si nécéssaire. 
+// Il peut arriver que des professeurs mettent des notes pour le même module mais sur plusieurs lignes d'UE sur Tomuss.
+const mergedModules = mergeModulesWithSameUeId(subjects)
 ```
 
 ### Remplir un fichier xlsx avec ses notes (pour l'IUT Info)
 
-<strong>Une version avec un site web a mettre en place facilement est disponible [à ce lien](https://github.com/Shawiizz/tomuss-api/tree/website).</strong>  
+#### Une version avec un site web a mettre en place facilement est disponible [à ce lien](https://github.com/Shawiizz/tomuss-api/tree/website).
 
 Si vous avez le fichier `Calculer ses moyennes BUT - Info Doua.xlsx` et que vous êtes en 1ʳᵉ année, il y a un bout de code qui permet de préremplir le fichier avec vos notes.     
 Je ne garantis pas que ça marche à 100%, mais ça peut vous faire gagner du temps.   
@@ -49,7 +62,7 @@ Je ne garantis pas que ça marche à 100%, mais ça peut vous faire gagner du te
 
 ```typescript
 const path = '/chemin/vers/le/fichier.xlsx'
-const modifiedXlsxFileBuffer = await fillXlsxFile(subjects, path, false)
+const modifiedXlsxFileBuffer = await fillXlsxFile(modules, path, false)
 fs.writeFileSync(path, modifiedXlsxFileBuffer)
 ```
 

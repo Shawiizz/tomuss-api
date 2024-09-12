@@ -1,20 +1,21 @@
 import * as ExcelJS from "exceljs";
-import {Subject} from "../models/SubjectModel";
+import {Module} from "../models/ModuleModel";
 
 /**
- * Fill the XLSX file with the given subjects array (works only for BUT1)
+ * Fill the XLSX file with the given modules array (works only for BUT1)
  *
- * @param subjects The subjects array
+ * @param modules The modules array
  * @param filePath The XLSX file path
  * @param calculateMoyIfNotFound If true, the moyenne will be calculated if not already calculated in Tomuss
  *
  * @returns The XLSX file buffer
  */
-export const fillXlsxFile = async (subjects: Subject[], filePath: string, calculateMoyIfNotFound: boolean = false): Promise<Buffer> => {
+export const fillXlsxFile = async (modules: Module[], filePath: string, calculateMoyIfNotFound: boolean = false): Promise<Buffer> => {
     const classeur = new ExcelJS.Workbook();
 
     await classeur.xlsx.readFile(filePath);
     const feuille = classeur.getWorksheet('BUT1'); // BUT1 is the name of the sheet
+    if(!feuille) throw new Error('The sheet BUT1 was not found in the XLSX file');
     const colonneB = feuille.getColumn('B'); // Column B => Codes UE
 
     colonneB.eachCell((cell, lineNumber) => {
@@ -25,7 +26,7 @@ export const fillXlsxFile = async (subjects: Subject[], filePath: string, calcul
 
         // Check if the cell is colorized
         if (style && style.type === 'pattern' && style.pattern === 'solid') {
-            const notes = subjects.find(subject => subject.ue.includes(cell.value!.toString()) && subject.notes.length)?.notes
+            const notes = modules.find(subject => subject.ue.includes(cell.value!.toString()) && subject.notes.length)?.notes
             if (!notes || !notes.length) return
 
             let moyenne = notes.find(note => note.title === 'moyenne')?.mark.value

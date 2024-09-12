@@ -1,23 +1,28 @@
-import CASAuthenticator from "../lib/classes/CASAuthenticator";
-import Tomuss from "../lib/classes/Tomuss";
-import {Semester} from "../lib/util/Semester";
+import CASAuthService from "../lib/services/CASAuthService";
+import TomussService from "../lib/services/TomussService";
+import {mergeModulesWithSameUeId} from "../lib/util/ModuleUtil";
+import {Season} from "../lib/util/enum/Season";
+import {SemesterService} from "../lib/services/SemesterService";
+import * as fs from 'fs'
 import {fillXlsxFile} from "../lib/util/MoyButCalculator";
-import * as fs from "fs";
-import {mergeSubjectsWithSameUeId} from "../lib/util/SubjectUtil";
 
 /**
- * Exemple d'utilisation du CASAuthenticator et de Tomuss (et de la fonction fillXlsxFile)
+ * Exemple d'utilisation du CASAuthService et du TomussService (et de la fonction fillXlsxFile)
  */
 async function main() {
-    const casAuthenticator = new CASAuthenticator()
-    await casAuthenticator.login('pXXXXXXX', 'password')
+    // Pour se connecter via le CAS
+    const authService = new CASAuthService()
+    await authService.login('pXXXXXX', 'password')
 
-    const tomuss = new Tomuss(casAuthenticator)
-    const subjects = await tomuss.getSubjects(Semester.S1, Semester.S2)
-    const mergedSubjects = mergeSubjectsWithSameUeId(subjects)
+    // Pour récupérer les différents modules enseignés dans un semestre
+    const tomussService = new TomussService(authService)
+    const subjects = await tomussService.getModules(SemesterService.fromYearAndSeason(2022, Season.AUTOMNE))
+    const mergedModules = mergeModulesWithSameUeId(subjects)
 
+    // Pour remplir le fichier de calcul des moyennes pour le BUT 1 par exemple
     const path = '/chemin/vers/le/fichier.xlsx'
-    const modifiedXlsxFileBuffer = await fillXlsxFile(mergedSubjects, path, false)
+    const modifiedXlsxFileBuffer = await fillXlsxFile(mergedModules, path, false)
     fs.writeFileSync(path, modifiedXlsxFileBuffer)
 }
+
 main().catch(console.error)
