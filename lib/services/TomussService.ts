@@ -1,8 +1,9 @@
-import {SemesterService} from "./SemesterService";
+import {Semester} from "../util/Semester";
 import {tomussGradesToModules} from "../util/TomussTransformer";
-import {extractGradesArray} from "../util/TomussParser";
+import {extractGradesArray, extractSemestersArray} from "../util/TomussParser";
 import CASAuthService from "./CASAuthService";
 import {Module} from "../models/ModuleModel";
+import {asSeason} from "../util/enum/Season";
 
 export default class TomussService {
     private readonly authService: CASAuthService
@@ -16,7 +17,7 @@ export default class TomussService {
      *
      * @param semester The semester
      */
-    async getTomussPage(semester: SemesterService) {
+    async getTomussPage(semester: Semester) {
         const regexUrl = /window.location = "(.*)"/
         const regexCountdown = /id="t">(\d+\.\d+)/;
 
@@ -38,7 +39,7 @@ export default class TomussService {
      *
      * @param semester The semesters
      */
-    async getModules(...semester: SemesterService[]) {
+    async getModules(...semester: Semester[]): Promise<Module[]> {
         const modules: Module[] = []
 
         for (const sem of semester) {
@@ -47,5 +48,17 @@ export default class TomussService {
         }
 
         return modules
+    }
+
+    /**
+     * Get the available semesters for the user
+     * @return The available semesters (returns Semester objects that can be used with getModules for example)
+     */
+    async getAvailableSemesters(): Promise<Semester[]> {
+        const homePageContent = await this.getTomussPage(Semester.current())
+        return Object.keys(extractSemestersArray(homePageContent.data) ?? {}).map(semesterName => {
+            const [year, season] = semesterName.split('/')
+            return Semester.fromYearAndSeason(parseInt(year), asSeason(season))
+        })
     }
 }

@@ -4,19 +4,33 @@ import {tomussDateToDate} from "./TomussTransformer";
 import {parse} from "json5";
 
 /**
- * Extracts the grades array from the HTML page
+ * Extracts the data array from the HTML page
  * The grades array is a JSON5 string inside a JS function call
- * Note: The parsing isn't perfect, but it works
- *
+ * @param html The HTML page
+ */
+export const extractDataArray = (html: string) => {
+    const arrayArg = html.split('display_update(')[1].split(',"Top"')[0]
+    return parse(arrayArg)
+}
+
+/**
+ * Extracts the grades array from the HTML page
  * @param html The HTML page
  */
 export const extractGradesArray = (html: string) => {
-    const arrayArg = html.split('display_update(')[1].split(',"Top"')[0]
-    const array = parse(arrayArg)
-
-    for (const item of array)
+    for (const item of extractDataArray(html))
         if (item[0] === 'Grades')
             return item[1][0]
+}
+
+/**
+ * Extracts the semesters array from the HTML page
+ * @param html The HTML page
+ */
+export const extractSemestersArray = (html: string): Record<string, string> | undefined => {
+    for (const item of extractDataArray(html))
+        if (item[0] === 'Semesters')
+            return item[1]
 }
 
 /**

@@ -1,5 +1,5 @@
-import { Season } from "../util/enum/Season";
-export declare class SemesterService {
+import { Season } from "./enum/Season";
+export declare class Semester {
     season: Season;
     year: number;
     constructor(season: Season, year: number);
@@ -10,17 +10,17 @@ export declare class SemesterService {
     /**
      * Returns the next semester
      */
-    next(): SemesterService;
+    next(): Semester;
     /**
      * Returns the previous semester
      */
-    previous(): SemesterService;
+    previous(): Semester;
     /**
      * Returns the semester from the given year and season
      */
-    static fromYearAndSeason(year: number, season: Season): SemesterService;
+    static fromYearAndSeason(year: number, season: Season): Semester;
     /**
      * Returns the current semester
      */
-    static current(): SemesterService;
+    static current(): Semester;
 }

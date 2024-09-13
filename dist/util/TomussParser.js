@@ -1,24 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseModule = exports.extractGradesArray = void 0;
+exports.parseModule = exports.extractSemestersArray = exports.extractGradesArray = exports.extractDataArray = void 0;
 const TomussGradesModel_1 = require("../models/tomuss/TomussGradesModel");
 const TomussTransformer_1 = require("./TomussTransformer");
 const json5_1 = require("json5");
 /**
- * Extracts the grades array from the HTML page
+ * Extracts the data array from the HTML page
  * The grades array is a JSON5 string inside a JS function call
- * Note: The parsing isn't perfect, but it works
- *
+ * @param html The HTML page
+ */
+const extractDataArray = (html) => {
+    const arrayArg = html.split('display_update(')[1].split(',"Top"')[0];
+    return (0, json5_1.parse)(arrayArg);
+};
+exports.extractDataArray = extractDataArray;
+/**
+ * Extracts the grades array from the HTML page
  * @param html The HTML page
  */
 const extractGradesArray = (html) => {
-    const arrayArg = html.split('display_update(')[1].split(',"Top"')[0];
-    const array = (0, json5_1.parse)(arrayArg);
-    for (const item of array)
+    for (const item of (0, exports.extractDataArray)(html))
         if (item[0] === 'Grades')
             return item[1][0];
 };
 exports.extractGradesArray = extractGradesArray;
+/**
+ * Extracts the semesters array from the HTML page
+ * @param html The HTML page
+ */
+const extractSemestersArray = (html) => {
+    for (const item of (0, exports.extractDataArray)(html))
+        if (item[0] === 'Semesters')
+            return item[1];
+};
+exports.extractSemestersArray = extractSemestersArray;
 /**
  * Parses a module from the JSON5 string
  *

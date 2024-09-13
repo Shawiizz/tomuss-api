@@ -47,6 +47,9 @@ await authService.login('pXXXXXX', 'password')
 const tomussService = new TomussService(authService)
 const subjects = await tomussService.getModules(SemesterService.fromYearAndSeason(2022, Season.AUTOMNE))
 
+// Pour récupérer les semestres disponibles
+const semesters = tomussService.getAvailableSemesters()
+
 // Pour fusionner les modules qui ont le même id d'UE si nécéssaire. 
 // Il peut arriver que des professeurs mettent des notes pour le même module mais sur plusieurs lignes d'UE sur Tomuss.
 const mergedModules = mergeModulesWithSameUeId(subjects)

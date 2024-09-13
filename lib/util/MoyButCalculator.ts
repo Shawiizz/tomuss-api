@@ -15,7 +15,7 @@ export const fillXlsxFile = async (modules: Module[], filePath: string, calculat
 
     await classeur.xlsx.readFile(filePath);
     const feuille = classeur.getWorksheet('BUT1'); // BUT1 is the name of the sheet
-    if(!feuille) throw new Error('The sheet BUT1 was not found in the XLSX file');
+    if (!feuille) throw new Error('The sheet BUT1 was not found in the XLSX file');
     const colonneB = feuille.getColumn('B'); // Column B => Codes UE
 
     colonneB.eachCell((cell, lineNumber) => {
