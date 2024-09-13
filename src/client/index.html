@@ -17,11 +17,11 @@
     }
 
     body {
-        background: rgb(0,6,94);
-        background: -moz-linear-gradient(23deg, rgba(0,6,94,1) 19%, rgba(3,54,142,1) 100%);
-        background: -webkit-linear-gradient(23deg, rgba(0,6,94,1) 19%, rgba(3,54,142,1) 100%);
-        background: linear-gradient(23deg, rgba(0,6,94,1) 19%, rgba(3,54,142,1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00065e",endColorstr="#03368e",GradientType=1);
+        background: rgb(0, 6, 94);
+        background: -moz-linear-gradient(23deg, rgba(0, 6, 94, 1) 19%, rgba(3, 54, 142, 1) 100%);
+        background: -webkit-linear-gradient(23deg, rgba(0, 6, 94, 1) 19%, rgba(3, 54, 142, 1) 100%);
+        background: linear-gradient(23deg, rgba(0, 6, 94, 1) 19%, rgba(3, 54, 142, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00065e", endColorstr="#03368e", GradientType=1);
         width: 100%;
         height: 100vh;
     }
@@ -60,11 +60,11 @@
         max-width: 400px;
         margin: 0 auto;
         padding: 1rem;
-        background: rgb(240,29,29);
-        background: -moz-linear-gradient(23deg, rgba(240,29,29,1) 15%, rgba(193,125,19,1) 100%);
-        background: -webkit-linear-gradient(23deg, rgba(240,29,29,1) 15%, rgba(193,125,19,1) 100%);
-        background: linear-gradient(23deg, rgba(240,29,29,1) 15%, rgba(193,125,19,1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f01d1d",endColorstr="#c17d13",GradientType=1);
+        background: rgb(240, 29, 29);
+        background: -moz-linear-gradient(23deg, rgba(240, 29, 29, 1) 15%, rgba(193, 125, 19, 1) 100%);
+        background: -webkit-linear-gradient(23deg, rgba(240, 29, 29, 1) 15%, rgba(193, 125, 19, 1) 100%);
+        background: linear-gradient(23deg, rgba(240, 29, 29, 1) 15%, rgba(193, 125, 19, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f01d1d", endColorstr="#c17d13", GradientType=1);
         border-radius: 5px;
         color: white;
     }
@@ -86,11 +86,12 @@
         border-radius: 5px;
         border: none;
         outline: none;
-        background: rgb(18,18,18);
-        background: -moz-linear-gradient(23deg, rgba(18,18,18,1) 15%, rgba(74,74,74,1) 100%);
-        background: -webkit-linear-gradient(23deg, rgba(18,18,18,1) 15%, rgba(74,74,74,1) 100%);
-        background: linear-gradient(23deg, rgba(18,18,18,1) 15%, rgba(74,74,74,1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#121212",endColorstr="#4a4a4a",GradientType=1);         color: white;
+        background: rgb(18, 18, 18);
+        background: -moz-linear-gradient(23deg, rgba(18, 18, 18, 1) 15%, rgba(74, 74, 74, 1) 100%);
+        background: -webkit-linear-gradient(23deg, rgba(18, 18, 18, 1) 15%, rgba(74, 74, 74, 1) 100%);
+        background: linear-gradient(23deg, rgba(18, 18, 18, 1) 15%, rgba(74, 74, 74, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#121212", endColorstr="#4a4a4a", GradientType=1);
+        color: white;
         font-weight: 600;
         font-size: 1.2rem;
         cursor: pointer;
@@ -135,34 +136,62 @@
         visibility: visible;
         opacity: 1;
     }
+
+    #loginDiv, #calculateDiv {
+        display: flex;
+        flex-direction: column;
+        gap: .8em;
+    }
+
+    .checkboxes {
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+    }
+
+    .checkboxes label {
+        display: flex;
+        gap: .5em;
+        align-items: center;
+    }
 </style>
 <body>
 <header>
     <h1>Calculateur de moyenne</h1>
-    <h2>Ce site permet de récupérer vos notes sur Tomuss et de les mettre dans un fichier XLSX fourni par l'IUT (fonctionne que pour les premières années).</h2>
-    <p>Le code source de ce site ainsi que du projet pour récupérer les notes est disponible sur ce <a href="https://github.com/Shawiizz/tomuss-api" target="_blank">GitHub</a></p>
+    <h2>Ce site permet de récupérer vos notes sur Tomuss et de les mettre dans un fichier XLSX fourni par l'IUT
+        (fonctionne que pour les premières années).</h2>
+    <p>Le code source de ce site ainsi que du projet pour récupérer les notes est disponible sur ce <a
+            href="https://github.com/Shawiizz/tomuss-api" target="_blank">GitHub</a></p>
 </header>
 <section id="main">
-    <p>Le programme a besoin de vos identifiants CAS pour récupérer les notes de Tomuss. <br>Le fichier peut prendre plusieurs secondes à être téléchargé selon s'il y a le compte a rebours de Tomuss ou non.</p>
+    <p>Le programme a besoin de vos identifiants CAS pour récupérer les notes de Tomuss. <br>Le fichier peut prendre
+        plusieurs secondes à être téléchargé selon s'il y a le compte a rebours de Tomuss ou non.</p>
     <form method="post">
-        <label for="username">Nom d'utilisateur Tomuss</label>
+        <span id="loginDiv">
+            <label for="username">Nom d'utilisateur Tomuss</label>
         <input type="text" name="username" id="username" placeholder="Nom d'utilisateur Tomuss" required>
         <label for="password">Mot de passe Tomuss</label>
         <input type="password" name="password" id="password" placeholder="Mot de passe Tomuss" required>
+        </span>
+        <span id="calculateDiv" style="display: none">
+            <fieldset id="semesters">
+  <legend>Séléctionner un ou plusieurs semestres</legend>
+</fieldset>
         <label for="checkbox">Forcer le calcul des moyennes</label>
-        <div class="tooltip">
+        <span class="tooltip">
             Détails
             <span class="tooltiptext">Si la moyenne n'est pas déjà calculée par les profs sur Tomuss, le logiciel peut le faire pour vous, mais attention, les coefficients ne sont pas connus donc la moyenne peut être sur-estimée ou sous-estimée.</span>
-        </div>
+        </span>
         <input type="checkbox" name="checkbox" id="checkbox">
-        <button type="submit">Télécharger le fichier</button>
+        </span>
+        <button type="submit">Se connecter</button>
     </form>
 </section>
 </body>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const tooltip = document.querySelector('.tooltip');
-        tooltip.addEventListener('click', function() {
+        tooltip.addEventListener('click', function () {
             this.classList.toggle('active');
         });
     });
@@ -171,23 +200,105 @@
     const username = document.querySelector('#username');
     const password = document.querySelector('#password');
     const checkbox = document.querySelector('#checkbox');
+    const semesters = document.querySelector('#semesters');
+    const calculateDiv = document.querySelector('#calculateDiv');
+    const loginDiv = document.querySelector('#loginDiv');
     const form = document.querySelector('form');
     const button = document.querySelector('button');
+    let loggedIn = false;
+    let semestersAreLoaded = false;
 
-    checkbox.addEventListener('change', function() {
-        if(this.checked)
+    checkbox.addEventListener('change', function () {
+        if (this.checked)
             alert('Attention, les coefficients ne sont pas connus donc la moyenne peut être sur-estimée ou sous-estimée.');
     });
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
-        requestFile();
+        if (!loggedIn) {
+            login();
+            return;
+        }
+        if(semestersAreLoaded)
+            requestFile();
     });
 
-    async function requestFile() {
+    const appendSelectionSemester = (semester, semesterNumber) => {
+        semesters.insertAdjacentHTML('beforeend', `
+        <div class="checkboxes">
+
+    <label><input type="checkbox" name="semCheck" value="${semester}" />${semester} (S${semesterNumber})</label>
+  </div>`)
+    }
+
+    const semesterToString = (semester) => {
+        return semester.year + " - " + semester.season;
+    }
+
+    const semesterStringToObject = (semesterString) => {
+        const [year, season] = semesterString.split(' - ');
+        return {year, season};
+    }
+
+    async function login() {
         const data = {
             username: username.value,
-            password: password.value,
+            password: password.value
+        };
+
+        button.disabled = true;
+        button.textContent = 'Connexion en cours...';
+
+        const response = await fetch('http://localhost:8745/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            alert('Une erreur est survenue, vérifiez vos identifiants.');
+            button.disabled = false;
+            button.textContent = 'Se connecter';
+            return
+        } else {
+            loggedIn = true;
+        }
+
+        button.textContent = 'Récupération des semestres...';
+        semestersAreLoaded = await getSemesters();
+        if (!semestersAreLoaded) {
+            alert('Une erreur est survenue, veuillez réessayer. ' + response.body);
+            button.disabled = false;
+            button.textContent = 'Se connecter';
+            return;
+        }
+
+        loginDiv.style.display = 'none';
+        calculateDiv.style.display = 'flex';
+        button.textContent = 'Télécharger le fichier';
+        button.disabled = false;
+    }
+
+    async function getSemesters() {
+        const response = await fetch('http://localhost:8745/semesters');
+        if (!response.ok) {
+            return false;
+        }
+        const data = await response.json();
+        data.semesters.forEach((semester, index) => {
+            const semesterString = semesterToString(semester)
+            appendSelectionSemester(semesterString, index + 1)
+        });
+        return true;
+    }
+
+    async function requestFile() {
+        const selectedSemesterss = document.querySelectorAll('#semesters input[name="semCheck"]:checked');
+
+        const data = {
+            semesters: Array.from(selectedSemesterss).map(input => semesterStringToObject(input.value)),
             calcMoy: checkbox.checked
         };
 
@@ -202,7 +313,7 @@
             body: JSON.stringify(data)
         });
 
-        if(!response.ok) {
+        if (!response.ok) {
             alert('Une erreur est survenue, vérifiez vos identifiants.');
             button.disabled = false;
             button.textContent = 'Télécharger le fichier';
